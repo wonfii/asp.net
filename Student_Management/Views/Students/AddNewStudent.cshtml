@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "New Student";
+}
+
+@model data_access.Entities.Student
+
+<div class="text-center m-5">
+    <h1 class="display-4">Add New Student</h1>
+</div>
+
+<div class="form-container">
+
+    <form asp-action="AddNewStudent" method="post">
+        <div class="row mb-3">
+            <label asp-for="FullName" class="col-sm-2 col-form-label"> Student's Full Name: </label>
+            <div class="col-sm-10">
+                <input asp-for="FullName" type="text" class="form-control smaller-input" placeholder="Full Name">
+                <span class="form-text text-danger" asp-validation-for="FullName"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="AverageGrade" class="col-sm-2 col-form-label">Average Grade: </label>
+            <div class="col-sm-10">
+                <input asp-for="AverageGrade" type="text" class="form-control smaller-input" placeholder="Average Grade">
+                <span class="form-text text-danger" asp-validation-for="AverageGrade"></span>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label asp-for="StudentImage" class="col-sm-2 col-form-label">Image: </label>
+            <div class="col-sm-10">
+                <input asp-for="StudentImage" type="text" class="form-control smaller-input" placeholder="Image URL">
+                <span class="form-text text-danger" asp-validation-for="StudentImage"></span>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="GroupId" class="form-label">Group</label>
+            <select asp-for="GroupId" asp-items="@ViewBag.GroupList" class="form-select">
+                <option selected>Choose...</option>
+            </select>
+            <span class="form-text text-danger" asp-validation-for="GroupId"></span>
+
+        </div>
+
+  
+
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="submit" class="btn btn-dark">Add Student</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Back</a>
+        </div>
+    </form>
+</div>
