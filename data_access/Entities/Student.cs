@@ -11,13 +11,10 @@ namespace data_access.Entities
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "This field is required."), MinLength(3)]
         public string FullName { get; set; }
 
-        [Required, Range(2,5)]
         public decimal AverageGrade { get; set; }
 
-        [Url]
         public string? StudentImage { get; set; }
 
         public Group? Group { get; set; }

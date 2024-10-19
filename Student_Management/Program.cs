@@ -1,5 +1,8 @@
 using data_access;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using Student_Management.Services;
 
 namespace Student_Management
 {
@@ -14,6 +17,14 @@ namespace Student_Management
 
             string connectionString = builder.Configuration.GetConnectionString("LocalDb")!;
             builder.Services.AddDbContext<StudentDbContext>(opt => opt.UseSqlServer(connectionString));
+
+
+            //Add Fluent Validation
+            builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+
+           // Add Custom Services
+            builder.Services.AddScoped<IStudentService, StudentService>();
 
             var app = builder.Build();
 
