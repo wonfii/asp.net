@@ -1,4 +1,5 @@
-﻿using data_access.Entities;
+﻿using data_access.Configuration;
+using data_access.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -20,29 +21,7 @@ namespace data_access
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Student>()
-                .Property(st => st.FullName)
-                .IsRequired();
-
-            modelBuilder.Entity<Student>()
-                .ToTable(t => t.HasCheckConstraint("CK_Student_AverageGrade", "AverageGrade >= 2 AND AverageGrade <= 5"));
-
-            modelBuilder.Entity<Group>()
-                .Property(g => g.Name)
-                .IsRequired();
-
-            modelBuilder.Entity<Group>()
-                .ToTable(t => t.HasCheckConstraint("CK_Group_StudyYear", "StudyYear >= 1 AND StudyYear <= 4"));
-
-
-            // Relationships configuration 
-
-            // Student - Group (* - 1)
-
-            modelBuilder.Entity<Student>()
-                .HasOne(st => st.Group)
-                .WithMany(g => g.Students)
-                .HasForeignKey(st => st.GroupId);
+            modelBuilder.ApplyConfiguration(new StudentDbConfigurations());
 
             modelBuilder.SeedGroups();
             modelBuilder.SeedStudents();
