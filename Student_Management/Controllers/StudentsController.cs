@@ -1,4 +1,5 @@
-﻿using data_access;
+﻿using business_logic.Interfaces;
+using data_access;
 using data_access.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -21,10 +22,11 @@ namespace Student_Management.Controllers
             return View(studentService.GetGroupsWithStudents());
         }
 
-        public IActionResult GroupDetails(int id)
+        public IActionResult GroupDetails(int id, string returnUrl = null)
         {
             var group = studentService.GetGroupDetails(id);
             if (group == null) return NotFound();
+            ViewBag.ReturnUrl = returnUrl; 
             return View(group);
         }
 

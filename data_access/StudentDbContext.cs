@@ -13,6 +13,7 @@ namespace data_access
     {
         public DbSet<Student> Students { get; set; }
         public DbSet<Group> Groups { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
 
         public StudentDbContext() : base() { }
         public StudentDbContext(DbContextOptions options) : base(options) { }
@@ -25,7 +26,7 @@ namespace data_access
 
             modelBuilder.SeedGroups();
             modelBuilder.SeedStudents();
-
+            modelBuilder.SeedSubjects();
         }
 
     }

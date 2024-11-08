@@ -1,3 +1,5 @@
+using business_logic.Interfaces;
+using business_logic.Services;
 using data_access;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -25,6 +27,17 @@ namespace Student_Management
 
            // Add Custom Services
             builder.Services.AddScoped<IStudentService, StudentService>();
+            builder.Services.AddScoped<ISubjectService, SubjectService>();
+            builder.Services.AddScoped<IAddSubjectService, AddSubjectService>();
+
+
+            builder.Services.AddSession(options =>
+            {
+                //options.IdleTimeout = TimeSpan.FromDays(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+            builder.Services.AddHttpContextAccessor();
 
             var app = builder.Build();
 
@@ -36,10 +49,13 @@ namespace Student_Management
                 app.UseHsts();
             }
 
+           
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 

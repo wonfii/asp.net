@@ -20,7 +20,7 @@
                         <h4 class="card-title">@group.Name</h4>
                         <h5 class="card-title">Study Year: @group.StudyYear</h5>
                         <p class="card-text"> There are @group.Students.Count students in this group.</p>
-                        <a asp-action="GroupDetails" asp-route-id="@group.Id" class="btn btn-dark">Show details</a>
+                        <a asp-action="GroupDetails"  asp-route-id="@group.Id" class="btn btn-dark">Show details</a>
                     </div>
                 </div>
             </div>
@@ -33,5 +33,5 @@
 }
 else
 {
-    <p>Zero cars are avaliable.</p>
+    <p>There aren't any groups.</p>
 }

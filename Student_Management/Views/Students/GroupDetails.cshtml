@@ -57,7 +57,15 @@
     </div>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a asp-action="Index" class="btn btn-outline-secondary">Back</a>
+
+        @if (ViewBag.ReturnUrl == null)
+        {
+            <a asp-action="Index" class="btn btn-outline-secondary">Back</a>
+        }
+        else
+        {
+            <a href="@ViewBag.ReturnUrl" class="btn btn-outline-secondary">Back</a>
+        }
     </div>
 
 }

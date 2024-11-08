@@ -1,24 +1,86 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@using business_logic.Interfaces;
+@using business_logic.Services;
+@model List<data_access.Entities.Group>
+@inject IAddSubjectService AddSubjectService;
 
-<div class="text-center">
-    <img src="~/images/st.png" class="st-img" alt="Student">
-</div>
 
 <div class="text-center m-5">
     <h1 class="display-4">Welcome to Student Management System</h1>
 </div>
 
-<div class="text-center">
-    <p class="fw-lighter">
-        Our Student Management System (SMS) is designed to streamline and enhance the administration of student data, 
-        making it easier for institutions to track academic performance, manage student records, and communicate efficiently. 
-        With a user-friendly interface and powerful tools, educators and administrators can manage class schedules, monitor student
-        progress, and ensure a smooth educational experience.
+<div class="home-container">
+    <div>
+        <img src="~/images/st.png" class="st-img" alt="Student">
+    </div>
 
-        Whether you're a teacher looking to organize your classroom, an administrator managing large student bodies, or a student 
-        accessing your personal records, our system provides the tools you need to succeed. Explore our features and see how our 
-        platform can simplify the management of educational data, making it accessible, accurate, and efficient.
-    </p>
+    <div>
+        <h3 class="display-6 m-5 text-center">Please choose your group</h3>
+
+        @if (Model.Any())
+        {
+            @foreach (var group in Model)
+            {
+                <a asp-controller="Students" 
+                    asp-action="GroupDetails" 
+                    asp-route-returnUrl="@Context.Request.Path"
+                    asp-route-id="@group.Id" 
+                    class="btn btn-outline-secondary">
+
+                    @group.Name
+
+                </a>
+            }
+        }
+        else
+        {
+            <p>There aren't any groups.</p>
+        }
+    </div>
+</div>
+
+<h3 class="display-4 m-5">Optional Subjects</h3>
+
+<a asp-controller="Subjects"
+   asp-action="Index"
+   class="btn btn-light">
+
+    Show selected subjects <i class="bi bi-journal-text m-lg-auto"></i>
+</a>
+
+
+<div class="optional-subj-container">
+    <ul>
+        @foreach (var subject in ViewBag.Subjects)
+        {
+            <div class="card">
+                <div class="card-body">
+                    <span class="fw-bold"> @subject.Name @subject.Ects ECTS </span>
+
+                    @if (AddSubjectService.IsSubjectAdded(subject.Id))
+                    {
+                        <a asp-controller="Subjects"
+                           asp-action="DeleteOptionalSubject"
+                           asp-route-subjectId="@subject.Id"
+                           asp-route-returnUrl="@Context.Request.Path"
+                           class="btn btn-outline-danger">
+                            Delete <i class="bi bi-dash-circle"></i>
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Subjects"
+                           asp-action="AddOptionalSubject"
+                           asp-route-subjectId="@subject.Id"
+                           asp-route-returnUrl="@Context.Request.Path"
+                           class="btn btn-light">
+                            Add Subject <i class="bi bi-plus-circle m-lg-auto"></i>
+                        </a>
+                    }
+                </div>
+            </div>
+        }
+    </ul>
 </div>

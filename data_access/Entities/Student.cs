@@ -19,5 +19,7 @@ namespace data_access.Entities
 
         public Group? Group { get; set; }
         public int GroupId {  get; set; }
+
+        public ICollection<Subject> Subjects { get; set; }
     }
 }

@@ -27,6 +27,11 @@ namespace data_access.Configuration
                 .WithMany(g => g.Students)
                 .HasForeignKey(st => st.GroupId);
 
+            // Student - Subject (* - *)
+
+            builder.HasMany(st => st.Subjects)
+                .WithMany(sj => sj.Students);
+
         }
     }
 
