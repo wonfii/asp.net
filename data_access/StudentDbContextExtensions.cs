@@ -34,5 +34,17 @@ namespace data_access
             );
         }
 
+        public static void SeedSubjects(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Subject>().HasData(
+                new Subject { Id = 1, Name = "Psychology", Ects = 5, IsOptional = true },
+                new Subject { Id = 2, Name = "Research Methodology", Ects = 6, IsOptional = true },
+                new Subject { Id = 3, Name = "Philosophy of Science", Ects = 4, IsOptional = true },
+                new Subject { Id = 4, Name = "Information Systems", Ects = 5, IsOptional = true },
+                new Subject { Id = 5, Name = "Cultural Studies", Ects = 3, IsOptional = true }
+            );
+
+        }
+
     }
 }

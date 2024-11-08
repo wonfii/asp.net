@@ -1,20 +1,10 @@
-﻿using data_access;
+﻿using business_logic.Interfaces;
+using data_access;
 using data_access.Entities;
 using Microsoft.EntityFrameworkCore;
 using Student_Management.Services;
 
 namespace Student_Management.Services {
-
-    public interface IStudentService
-    {
-        //CRUD Interface
-        List<Group> GetGroupsWithStudents();
-        Group? GetGroupDetails(int id);
-        Student? GetStudent(int id);
-        void Create(Student product);
-        void Edit(Student product);
-        void Delete(int id);
-    }
 
     public class StudentService : IStudentService
     {
