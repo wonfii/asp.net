@@ -1,6 +1,7 @@
 ﻿using business_logic.Interfaces;
 using data_access;
 using data_access.Entities;
+using data_access.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Student_Management.Services;
 
@@ -8,49 +9,55 @@ namespace Student_Management.Services {
 
     public class StudentService : IStudentService
     {
-        private readonly StudentDbContext context;
-
-        public StudentService(StudentDbContext context)
+        private readonly IRepository<Student> studentRepo;
+        private readonly IRepository<Group> groupRepo;
+        public StudentService(IRepository<Student> studentRepo, IRepository<Group> groupRepo)
         {
-            this.context = context;
+            this.studentRepo = studentRepo;
+            this.groupRepo = groupRepo;
         }
 
         public List<Group> GetGroupsWithStudents()
         {
-            return context.Groups.Include(g => g.Students).ToList();
+            return groupRepo.Get(
+                includeProperties: new string[] { "Students" }
+            ).ToList();
         }
 
         public Group? GetGroupDetails(int id)
         {
-            return context.Groups.Include(g => g.Students).FirstOrDefault(g => g.Id == id);
+            var group = groupRepo.Get(
+                filter: g => g.Id == id,
+                includeProperties: new[] { "Students" }
+            ).FirstOrDefault();
+
+            return group;
         }
 
         public void Create(Student newStudent)
         {
-            context.Students.Add(newStudent);
-            context.SaveChanges();
+            Console.WriteLine($"here");
+            studentRepo.Insert(newStudent);
+            studentRepo.Save();
+
+            Console.WriteLine($"Student {newStudent.FullName} added successfully");
         }
 
         public void Delete(int id)
         {
-            var student = context.Students.Find(id);
-            if (student == null) return;
-
-            context.Students.Remove(student);
-            context.SaveChanges();
+            studentRepo.Delete(id);
+            studentRepo.Save();
         }
 
         public void Edit(Student student)
         {
-            context.Students.Update(student);
-            context.SaveChanges();
+            studentRepo.Update(student);
+            studentRepo.Save();
         }
 
         public Student GetStudent(int id)
         {
-            var student = context.Students.Find(id);
-            if (student == null) { return null; }
-            return student;
+            return studentRepo.GetByID(id);
         }
     }
 

@@ -67,12 +67,13 @@ namespace Student_Management.Controllers
         [HttpPost]
         public IActionResult EditStudent(Student student)
         {
+            Console.WriteLine("Form submitted");
             if (!ModelState.IsValid)
             {
                 LoadGroups();
                 return View(student);
             }
-
+            Console.WriteLine($"Student {student.FullName} added");
             studentService.Edit(student);
             return RedirectToAction(nameof(Index));
         }

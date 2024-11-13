@@ -1,6 +1,7 @@
 ﻿using business_logic.Interfaces;
 using data_access;
 using data_access.Entities;
+using data_access.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,48 +12,43 @@ namespace business_logic.Services
 {
     public class SubjectService : ISubjectService
     {
-        private readonly StudentDbContext context;
-
-        public SubjectService(StudentDbContext context)
+        private readonly IRepository<Subject> subjectRepo;
+        public SubjectService(IRepository<Subject> subjectRepo)
         {
-            this.context = context;
+            this.subjectRepo = subjectRepo;
         }
 
         public void Create(Subject subject)
         {
-            context.Subjects.Add(subject);
-            context.SaveChanges(); ;
+            subjectRepo.Insert(subject);
+            subjectRepo.Save();
         }
 
         public void Delete(int id)
         {
-            var subject = context.Subjects.Find(id);
-            if (subject == null) return;
-
-            context.Subjects.Remove(subject);
-            context.SaveChanges();
+            subjectRepo.Delete(id);
+            subjectRepo.Save();
         }
 
         public void Edit(Subject subject)
         {
-            context.Subjects.Update(subject);
-            context.SaveChanges();
+            subjectRepo.Update(subject);
+            subjectRepo.Save();
         }
 
         public List<Subject> GetAllSubjects()
         {
-            return context.Subjects.ToList();
+            return subjectRepo.Get().ToList();
         }
 
 		public List<Subject> GetOptionalSubjects(List<int> ids)
 		{
-			return context.Subjects.Where(sub => ids.Contains(sub.Id)).ToList();
+            return subjectRepo.Get(sub => ids.Contains(sub.Id)).ToList();
 		}
 
 		public Subject GetSubjectById(int id)
         {
-           var subject = context.Subjects.Find(id);
-           return subject; 
+            return subjectRepo.GetByID(id);
         }
     }
 }
