@@ -1,9 +1,9 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@using business_logic.Interfaces;
+@* @using business_logic.Interfaces;
 @using business_logic.Services;
-@model List<data_access.Entities.Group>
+@model List<data_access.Entities.FieldOfStudy>
 @inject IAddSubjectService AddSubjectService;
 
 
@@ -84,3 +84,28 @@
         }
     </ul>
 </div>
+ *@
+
+ @model List<data_access.Entities.FieldOfStudy>
+
+<div class="text-center m-5">
+    <h1 class="display-4">Faculty of Computer Science and Telecommunications</h1>
+</div>
+
+@if (Model.Any())
+{    
+    <div class="fields-container">
+        @foreach (var field in Model)
+        {
+            <div class="field-box">
+                <a asp-action="FieldOfStudyDetails" asp-route-id="@field.Id" asp-route-returnUrl="@Context.Request.Path"> 
+                    @field.Name
+                </a>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>There aren't any fields of study.</p>
+}

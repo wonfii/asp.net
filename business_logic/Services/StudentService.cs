@@ -10,21 +10,21 @@ namespace Student_Management.Services {
     public class StudentService : IStudentService
     {
         private readonly IRepository<Student> studentRepo;
-        private readonly IRepository<Group> groupRepo;
-        public StudentService(IRepository<Student> studentRepo, IRepository<Group> groupRepo)
+        private readonly IRepository<FieldOfStudy> groupRepo;
+        public StudentService(IRepository<Student> studentRepo, IRepository<FieldOfStudy> groupRepo)
         {
             this.studentRepo = studentRepo;
             this.groupRepo = groupRepo;
         }
 
-        public List<Group> GetGroupsWithStudents()
+        public List<FieldOfStudy> GetGroupsWithStudents()
         {
             return groupRepo.Get(
                 includeProperties: new string[] { "Students" }
             ).ToList();
         }
 
-        public Group? GetGroupDetails(int id)
+        public FieldOfStudy? GetGroupDetails(int id)
         {
             var group = groupRepo.Get(
                 filter: g => g.Id == id,
@@ -36,11 +36,9 @@ namespace Student_Management.Services {
 
         public void Create(Student newStudent)
         {
-            Console.WriteLine($"here");
             studentRepo.Insert(newStudent);
             studentRepo.Save();
 
-            Console.WriteLine($"Student {newStudent.FullName} added successfully");
         }
 
         public void Delete(int id)
@@ -53,6 +51,11 @@ namespace Student_Management.Services {
         {
             studentRepo.Update(student);
             studentRepo.Save();
+        }
+
+        public FieldOfStudy GetFieldOfStudy(int id)
+        {
+            return groupRepo.GetByID(id);
         }
 
         public Student GetStudent(int id)

@@ -16,33 +16,46 @@ namespace data_access.Configuration
         {
             builder.Property(st => st.FullName).IsRequired();
 
-            builder.ToTable(t => t.HasCheckConstraint("CK_Student_AverageGrade", "AverageGrade >= 2 AND AverageGrade <= 5"));          
+            builder.ToTable(t => t.HasCheckConstraint("CK_Student_AverageGrade", "AverageGrade >= 2 AND AverageGrade <= 5"));
 
 
             // Relationships configuration 
 
-            // Student - Group (* - 1)
+            // Student - FieldOfStudy (* - 1)
 
-            builder.HasOne(st => st.Group)
-                .WithMany(g => g.Students)
-                .HasForeignKey(st => st.GroupId);
+            builder.HasOne(st => st.FieldOfStudy)
+               .WithMany(f => f.Students)
+               .HasForeignKey(st => st.FieldOfStudyId);
 
             // Student - Subject (* - *)
 
             builder.HasMany(st => st.Subjects)
-                .WithMany(sj => sj.Students);
-
+               .WithMany(sj => sj.Students)
+               .UsingEntity<StudentSubject>();
+        
         }
     }
 
-    public class GroupDbConfigurations : IEntityTypeConfiguration<Group>
+    public class FieldOfStudyDbConfigurations : IEntityTypeConfiguration<FieldOfStudy>
     {
-        public void Configure(EntityTypeBuilder<Group> builder)
+        public void Configure(EntityTypeBuilder<FieldOfStudy> builder)
         {
             builder.Property(g => g.Name)
                 .IsRequired();
 
-            builder.ToTable(t => t.HasCheckConstraint("CK_Group_StudyYear", "StudyYear >= 1 AND StudyYear <= 4"));
+            // FieldOfStudy - Subject (* - *)
+
+            builder.HasMany(f => f.Subjects)
+               .WithMany(sj => sj.FieldsOfStudy)
+               .UsingEntity<FieldOfStudySubject>();
+        }
+    }
+
+    public class FssConfigurations : IEntityTypeConfiguration<FieldOfStudySubject>
+    {
+        public void Configure(EntityTypeBuilder<FieldOfStudySubject> builder)
+        {
+            builder.HasKey(fss => new { fss.FieldOfStudyId, fss.SubjectId });
         }
     }
 }

@@ -1,4 +1,4 @@
-html {
+﻿html {
   font-size: 14px;
 }
 
@@ -43,6 +43,37 @@ body {
     vertical-align: middle;
 }
 
+.fields-container {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 30px; 
+}
+
+.field-box {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 5px;
+    flex: 1 1 calc(33.33% - 30px);
+    box-sizing: border-box;
+    min-width: 200px;
+    height: 100px;
+    box-shadow: 4px 4px 4px rgb(108,117,125);
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
+
+.field-box:active {
+    box-shadow: none;
+}
+
+
+@media (max-width: 600px) {
+    .field-box {
+        flex: 1 1 100%; 
+    }
+}
 .home-container {
     display: flex;
     gap: 20px;
@@ -61,4 +92,9 @@ body {
 
 .card {
     margin: 15px;
+}
+
+.field-box a {
+    text-decoration: none;
+    color: inherit;
 }

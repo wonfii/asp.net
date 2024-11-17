@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace data_access.Entities
+﻿namespace data_access.Entities
 {
     public class Student
     {
@@ -17,8 +10,8 @@ namespace data_access.Entities
 
         public string? StudentImage { get; set; }
 
-        public Group? Group { get; set; }
-        public int GroupId {  get; set; }
+        public FieldOfStudy FieldOfStudy { get; set; }
+        public int FieldOfStudyId {  get; set; }
 
         public ICollection<Subject> Subjects { get; set; }
     }

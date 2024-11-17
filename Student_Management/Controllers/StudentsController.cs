@@ -67,20 +67,18 @@ namespace Student_Management.Controllers
         [HttpPost]
         public IActionResult EditStudent(Student student)
         {
-            Console.WriteLine("Form submitted");
             if (!ModelState.IsValid)
             {
                 LoadGroups();
                 return View(student);
             }
-            Console.WriteLine($"Student {student.FullName} added");
             studentService.Edit(student);
             return RedirectToAction(nameof(Index));
         }
 
         private void LoadGroups()
         {
-            ViewBag.GroupList = new SelectList(studentService.GetGroupsWithStudents(), nameof(Group.Id), nameof(Group.Name));
+            ViewBag.GroupList = new SelectList(studentService.GetGroupsWithStudents(), nameof(FieldOfStudy.Id), nameof(FieldOfStudy.Name));
         }
     }
 

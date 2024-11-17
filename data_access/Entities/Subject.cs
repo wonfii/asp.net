@@ -17,5 +17,6 @@ namespace data_access.Entities
         public bool IsOptional { get; set; }
 
         public ICollection<Student> Students { get; set; }
+        public ICollection<FieldOfStudy> FieldsOfStudy { get; set; }
     }
 }
