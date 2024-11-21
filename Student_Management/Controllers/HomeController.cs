@@ -13,21 +13,23 @@ namespace Student_Management.Controllers
     {
         private readonly IStudentService studentService;
 
-        private readonly ISubjectService subjectService;
-
-        public HomeController(IStudentService studentService, ISubjectService subjectService)
+        public HomeController(IStudentService studentService)
         {
-            this.studentService = studentService;
-            this.subjectService = subjectService;
-        
+            this.studentService = studentService;        
         }      
 
         public IActionResult Index()
         {
             var groups = studentService.GetGroupsWithStudents();
-
-            ViewBag.Subjects = subjectService.GetAllSubjects();
             return View(groups);
+        }
+
+        public IActionResult FieldOfStudyDetails(int id, string returnUrl = null)
+        {
+            var group = studentService.GetFieldOfStudy(id);
+            if (group == null) return NotFound();
+            ViewBag.ReturnUrl = returnUrl;
+            return View(group);
         }
 
 

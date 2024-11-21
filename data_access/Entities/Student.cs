@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace data_access.Entities
 {
@@ -17,9 +13,15 @@ namespace data_access.Entities
 
         public string? StudentImage { get; set; }
 
-        public Group? Group { get; set; }
-        public int GroupId {  get; set; }
+        public FieldOfStudy FieldOfStudy { get; set; }
 
-        public ICollection<Subject> Subjects { get; set; }
+        public int FieldOfStudyId {  get; set; }
+
+        public string Email { get; set; }
+
+        public ICollection<Subject>? Subjects { get; set; }
+
+        public string? UserId { get; set; }
+        public IdentityUser User { get; set; }
     }
 }

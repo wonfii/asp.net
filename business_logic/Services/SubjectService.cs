@@ -1,6 +1,7 @@
 ﻿using business_logic.Interfaces;
 using data_access;
 using data_access.Entities;
+using data_access.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,48 +12,73 @@ namespace business_logic.Services
 {
     public class SubjectService : ISubjectService
     {
-        private readonly StudentDbContext context;
-
-        public SubjectService(StudentDbContext context)
+        private readonly IRepository<Subject> subjectRepo;
+        private readonly IRepository<FieldOfStudySubject> fosSubRepo;
+        private readonly IRepository<StudentSubject> studentSubRepo;
+        public SubjectService(IRepository<Subject> subjectRepo,
+            IRepository<FieldOfStudySubject> fosSubRepo,
+            IRepository<StudentSubject> studentSubRepo)
         {
-            this.context = context;
+            this.subjectRepo = subjectRepo;
+            this.fosSubRepo = fosSubRepo;
+            this.studentSubRepo = studentSubRepo;
         }
 
         public void Create(Subject subject)
         {
-            context.Subjects.Add(subject);
-            context.SaveChanges(); ;
+            subjectRepo.Insert(subject);
+            subjectRepo.Save();
         }
 
         public void Delete(int id)
         {
-            var subject = context.Subjects.Find(id);
-            if (subject == null) return;
-
-            context.Subjects.Remove(subject);
-            context.SaveChanges();
+            subjectRepo.Delete(id);
+            subjectRepo.Save();
         }
 
         public void Edit(Subject subject)
         {
-            context.Subjects.Update(subject);
-            context.SaveChanges();
+            subjectRepo.Update(subject);
+            subjectRepo.Save();
         }
 
         public List<Subject> GetAllSubjects()
         {
-            return context.Subjects.ToList();
+            return subjectRepo.Get().ToList();
         }
 
-		public List<Subject> GetOptionalSubjects(List<int> ids)
-		{
-			return context.Subjects.Where(sub => ids.Contains(sub.Id)).ToList();
-		}
-
-		public Subject GetSubjectById(int id)
+        public List<Subject> GetOptionalSubjects()
         {
-           var subject = context.Subjects.Find(id);
-           return subject; 
+            return subjectRepo.Get(
+                filter: sub => sub.IsOptional == true
+            ).ToList();
+        }
+
+        public List<Subject> GetSelectedSubjectsForStudent(int studentId)
+        {
+            var selectedSubjectIds = studentSubRepo.Get(
+                filter: ss => ss.StudentId == studentId
+            ).Select(ss => ss.SubjectId).ToList();
+
+            return subjectRepo.Get(
+                filter: sub => selectedSubjectIds.Contains(sub.Id)
+            ).ToList();
+        }
+
+        public List<Subject> GetMandatorySubjects(int fieldOfStudyId)
+        {
+            var allSubjectIds = fosSubRepo.Get(
+                filter: fosSub => fosSub.FieldOfStudyId == fieldOfStudyId
+            ).Select(fosSub => fosSub.SubjectId).ToList();
+
+            return subjectRepo.Get(
+                filter: sub => allSubjectIds.Contains(sub.Id)
+            ).ToList();
+        }
+
+        public Subject GetSubjectById(int id)
+        {
+            return subjectRepo.GetByID(id);
         }
     }
 }

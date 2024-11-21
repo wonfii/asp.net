@@ -1,35 +1,57 @@
 ﻿using business_logic.Interfaces;
-using business_logic.Services;
-using data_access.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Student_Management.Services;
 
 namespace Student_Management.Controllers
 {
     public class SubjectsController : Controller
     {
         private readonly IAddSubjectService addSubjectService;
+        private readonly ISubjectService subjectService;
+        private readonly IStudentService studentService;
+        private readonly UserManager<IdentityUser> userManager;
 
-        public SubjectsController(IAddSubjectService addSubjectService)
+        public SubjectsController(IAddSubjectService addSubjectService,
+            IStudentService studentService,
+            UserManager<IdentityUser> userManager,
+            ISubjectService subjectService)
         {
+            this.studentService = studentService;
+            this.userManager = userManager;
             this.addSubjectService = addSubjectService;
-
+            this.subjectService = subjectService;
         }
 
         public IActionResult Index()
         {
-            return View(addSubjectService.GetSubjects().ToList());
+            return View(subjectService.GetOptionalSubjects().ToList());
         }
 
         public IActionResult AddOptionalSubject(int subjectId, string returnUrl)
         {
-            addSubjectService.AddSubject(subjectId);
+            var userId = userManager.GetUserId(User);
+
+            var student = studentService.GetStudentByUserId(userId);
+
+            if (student == null)
+            {
+                return NotFound();
+            }
+            addSubjectService.AddSubject(student.Id,subjectId);
             return Redirect(returnUrl);
         }
 
-        public IActionResult DeleteOptionalSubject(int subjectId, string returnUrl)
+        public IActionResult RemoveOptionalSubject(int subjectId, string returnUrl)
         {
-            addSubjectService.RemoveSubject(subjectId);
+            var userId = userManager.GetUserId(User);
+
+            var student = studentService.GetStudentByUserId(userId);
+
+            if (student == null)
+            {
+                return NotFound();
+            }
+            addSubjectService.RemoveSubject(student.Id, subjectId);
             return Redirect(returnUrl);
         }
     }

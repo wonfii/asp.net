@@ -1,10 +1,12 @@
 ﻿@model List<data_access.Entities.Subject>
 
+<div class="text-center m-5">
+	<h1 class="display-4">Additional Subjects</h1>
+</div>
+
 <div>
 	@if(Model.Any())
 	{
-		<h3 class="display-6 m-5 text-center">You have chosen @Model.Count() additional subjects: </h3>
-
 		<ol class="list-group list-group-numbered m-4">
 			@foreach(var sub in Model)
 			{
@@ -13,14 +15,12 @@
 					<div class="ms-2 me-auto">
 						<div class="fw-bold">@sub.Name</div>
 						ECTS: @sub.Ects
-
 						<a asp-controller="Subjects"
-						   asp-action="DeleteOptionalSubject"
+						   asp-action="AddOptionalSubject"
 						   asp-route-subjectId="@sub.Id"
 						   asp-route-returnUrl="@Context.Request.Path"
-						   class="btn btn-outline-danger m-lg-4">
-
-							Delete <i class="bi bi-dash-circle"></i>
+						   class="btn btn-light">
+							Add Subject <i class="bi bi-plus-circle m-lg-auto"></i>
 						</a>
 
 					</div>
@@ -32,11 +32,10 @@
 	}
 	else
 	{
-		<p>No additional subjects selected!</p>
+		<p>There aren't any additional subjects!</p>
 	}
-
-	<a asp-controller="Home"
-	   asp-action="Index"
+	<a asp-controller="Students"
+	   asp-action="MyProfile"
 	   class="btn btn-outline-secondary">
 		Back
 	</a>

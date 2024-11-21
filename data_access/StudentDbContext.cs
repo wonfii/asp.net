@@ -1,20 +1,19 @@
 ﻿using data_access.Configuration;
 using data_access.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace data_access
 {
-    public class StudentDbContext : DbContext 
+    public class StudentDbContext : IdentityDbContext<IdentityUser> 
     {
         public DbSet<Student> Students { get; set; }
-        public DbSet<Group> Groups { get; set; }
+        public DbSet<FieldOfStudy> FieldsOfStudy { get; set; }
         public DbSet<Subject> Subjects { get; set; }
-
+        public DbSet<FieldOfStudySubject> FieldOfStudySubject { get; set; }
+        public DbSet<StudentSubject> StudentSubject { get; set; }
         public StudentDbContext() : base() { }
         public StudentDbContext(DbContextOptions options) : base(options) { }
 
@@ -23,10 +22,14 @@ namespace data_access
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new StudentDbConfigurations());
+            modelBuilder.ApplyConfiguration(new FieldOfStudyDbConfigurations());
+            modelBuilder.ApplyConfiguration(new FieldOfStudyDbConfigurations());
+            modelBuilder.ApplyConfiguration(new StudentSubjectDbConfigurations());
 
-            modelBuilder.SeedGroups();
+            modelBuilder.SeedFieldsOfStudy();
             modelBuilder.SeedStudents();
             modelBuilder.SeedSubjects();
+            modelBuilder.SeedFieldsOfStudySubjects();
         }
 
     }

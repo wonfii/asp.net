@@ -10,10 +10,8 @@ namespace business_logic.Interfaces
 {
     public interface IAddSubjectService
     {
-        List<Subject> GetSubjects();
-        void AddSubject(int subjectId);
-        void RemoveSubject(int subjectId);
+        void AddSubject(int studentId, int subjectId);
+        void RemoveSubject(int subjectId, int studentId);
 
-        public bool IsSubjectAdded(int subjectId);
     }
 }

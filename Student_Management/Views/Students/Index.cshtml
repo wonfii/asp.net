@@ -3,7 +3,7 @@
     ViewData["Title"] = "Groups";
 }
 
-@model List<data_access.Entities.Group>;
+@model List<data_access.Entities.FieldOfStudy>;
 
 <h1 m-5>Choose your group</h1>
 
@@ -18,7 +18,6 @@
                 <div class="card h-100" style="width: 18rem;">
                     <div class="card-body">
                         <h4 class="card-title">@group.Name</h4>
-                        <h5 class="card-title">Study Year: @group.StudyYear</h5>
                         <p class="card-text"> There are @group.Students.Count students in this group.</p>
                         <a asp-action="GroupDetails"  asp-route-id="@group.Id" class="btn btn-dark">Show details</a>
                     </div>

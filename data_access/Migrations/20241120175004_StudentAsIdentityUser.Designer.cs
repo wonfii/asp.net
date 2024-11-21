@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using data_access;
 
@@ -11,9 +12,11 @@ using data_access;
 namespace data_access.Migrations
 {
     [DbContext(typeof(StudentDbContext))]
-    partial class StudentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241120175004_StudentAsIdentityUser")]
+    partial class StudentAsIdentityUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -416,10 +419,6 @@ namespace data_access.Migrations
                     b.Property<decimal>("AverageGrade")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("FieldOfStudyId")
                         .HasColumnType("int");
 
@@ -451,7 +450,6 @@ namespace data_access.Migrations
                         {
                             Id = 1,
                             AverageGrade = 4.5m,
-                            Email = "alice.smith@student.uni",
                             FieldOfStudyId = 1,
                             FullName = "Alice Smith",
                             StudentImage = "https://i.pinimg.com/564x/d1/2d/ec/d12dece72502dd732b11ec5a66fb9076.jpg"
@@ -460,7 +458,6 @@ namespace data_access.Migrations
                         {
                             Id = 2,
                             AverageGrade = 3.9m,
-                            Email = "john.doe@student.uni",
                             FieldOfStudyId = 1,
                             FullName = "John Doe"
                         },
@@ -468,7 +465,6 @@ namespace data_access.Migrations
                         {
                             Id = 3,
                             AverageGrade = 4.1m,
-                            Email = "emily.clark@student.uni",
                             FieldOfStudyId = 2,
                             FullName = "Emily Clark",
                             StudentImage = "https://i.pinimg.com/enabled_lo/564x/8b/9a/02/8b9a02ac3ea4d3bdb3e1403c34a6c232.jpg"
@@ -477,7 +473,6 @@ namespace data_access.Migrations
                         {
                             Id = 4,
                             AverageGrade = 3.7m,
-                            Email = "michael.johnson@student.uni",
                             FieldOfStudyId = 2,
                             FullName = "Michael Johnson",
                             StudentImage = "https://i.pinimg.com/564x/db/c5/e6/dbc5e69ece5632c0885e497d1882d40b.jpg"
@@ -486,7 +481,6 @@ namespace data_access.Migrations
                         {
                             Id = 5,
                             AverageGrade = 4.3m,
-                            Email = "sophia.williams@student.uni",
                             FieldOfStudyId = 3,
                             FullName = "Sophia Williams"
                         },
@@ -494,7 +488,6 @@ namespace data_access.Migrations
                         {
                             Id = 6,
                             AverageGrade = 4.0m,
-                            Email = "liam.brown@student.uni",
                             FieldOfStudyId = 4,
                             FullName = "Liam Brown"
                         },
@@ -502,7 +495,6 @@ namespace data_access.Migrations
                         {
                             Id = 7,
                             AverageGrade = 3.8m,
-                            Email = "olivia.davis@student.uni",
                             FieldOfStudyId = 4,
                             FullName = "Olivia Davis",
                             StudentImage = "https://i.pinimg.com/736x/74/94/71/749471a2654703b02997f7357ef57a37.jpg"
