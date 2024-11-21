@@ -1,6 +1,9 @@
 ﻿using business_logic.Interfaces;
+using business_logic.Services;
 using data_access;
 using data_access.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,10 +14,16 @@ namespace Student_Management.Controllers
     public class StudentsController : Controller
     {
         private readonly IStudentService studentService;
+        private readonly ISubjectService subjectService;
+        private readonly UserManager<IdentityUser> userManager;
 
-        public StudentsController(IStudentService studentService)
+        public StudentsController(IStudentService studentService, 
+            UserManager<IdentityUser> userManager,
+            ISubjectService subjectService)
         {
             this.studentService = studentService;
+            this.userManager = userManager;
+            this.subjectService = subjectService;
         }
 
         public IActionResult Index()
@@ -75,6 +84,32 @@ namespace Student_Management.Controllers
             studentService.Edit(student);
             return RedirectToAction(nameof(Index));
         }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult MyProfile()
+        {
+            var userId = userManager.GetUserId(User);
+
+            var student = studentService.GetStudentByUserId(userId);
+            
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            var mandatorySubjects = subjectService.GetMandatorySubjects(student.FieldOfStudyId);     
+            var optionalSubjects = subjectService.GetOptionalSubjects();
+            var selectedSubjects = subjectService.GetSelectedSubjectsForStudent(student.Id);
+
+            ViewBag.MandatorySubjects = mandatorySubjects;
+            ViewBag.OptionalSubjects = optionalSubjects;
+            ViewBag.SelectedSubjects = selectedSubjects;
+
+
+            return View(student);
+        }
+
 
         private void LoadGroups()
         {

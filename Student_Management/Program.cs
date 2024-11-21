@@ -6,6 +6,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Student_Management.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace Student_Management
 {
@@ -20,6 +21,9 @@ namespace Student_Management
 
             string connectionString = builder.Configuration.GetConnectionString("LocalDb")!;
             builder.Services.AddDbContext<StudentDbContext>(opt => opt.UseSqlServer(connectionString));
+
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<StudentDbContext>();
 
 
             //Add Fluent Validation
@@ -60,6 +64,7 @@ namespace Student_Management
             app.UseSession();
 
             app.UseAuthorization();
+            app.MapRazorPages();
 
             app.MapControllerRoute(
                 name: "default",

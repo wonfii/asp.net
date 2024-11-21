@@ -43,10 +43,20 @@ body {
     vertical-align: middle;
 }
 
+.profileImg {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 100px;
+    display: inline;
+    vertical-align: middle;
+}
+
 .fields-container {
     display: flex;
-    flex-wrap: wrap; 
-    gap: 30px; 
+    flex-wrap: wrap;
+    gap: 30px;
 }
 
 .field-box {

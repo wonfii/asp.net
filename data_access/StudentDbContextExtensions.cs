@@ -21,13 +21,13 @@ namespace data_access
         public static void SeedStudents(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Student>().HasData(
-                new Student { Id = 1, FullName = "Alice Smith", AverageGrade = 4.5M, FieldOfStudyId = 1, StudentImage = @"https://i.pinimg.com/564x/d1/2d/ec/d12dece72502dd732b11ec5a66fb9076.jpg" },
-                new Student { Id = 2, FullName = "John Doe", AverageGrade = 3.9M, FieldOfStudyId = 1, StudentImage = null },
-                new Student { Id = 3, FullName = "Emily Clark", AverageGrade = 4.1M, FieldOfStudyId = 2, StudentImage = @"https://i.pinimg.com/enabled_lo/564x/8b/9a/02/8b9a02ac3ea4d3bdb3e1403c34a6c232.jpg" },
-                new Student { Id = 4, FullName = "Michael Johnson", AverageGrade = 3.7M, FieldOfStudyId = 2, StudentImage = @"https://i.pinimg.com/564x/db/c5/e6/dbc5e69ece5632c0885e497d1882d40b.jpg" },
-                new Student { Id = 5, FullName = "Sophia Williams", AverageGrade = 4.3M, FieldOfStudyId = 3, StudentImage = null },
-                new Student { Id = 6, FullName = "Liam Brown", AverageGrade = 4.0M, FieldOfStudyId = 4, StudentImage = null },
-                new Student { Id = 7, FullName = "Olivia Davis", AverageGrade = 3.8M, FieldOfStudyId = 4, StudentImage = @"https://i.pinimg.com/736x/74/94/71/749471a2654703b02997f7357ef57a37.jpg" }
+                new Student { Id = 1, FullName = "Alice Smith", AverageGrade = 4.5M, FieldOfStudyId = 1, StudentImage = @"https://i.pinimg.com/564x/d1/2d/ec/d12dece72502dd732b11ec5a66fb9076.jpg", Email = "alice.smith@student.uni" },
+                new Student { Id = 2, FullName = "John Doe", AverageGrade = 3.9M, FieldOfStudyId = 1, StudentImage = null, Email = "john.doe@student.uni" },
+                new Student { Id = 3, FullName = "Emily Clark", AverageGrade = 4.1M, FieldOfStudyId = 2, StudentImage = @"https://i.pinimg.com/enabled_lo/564x/8b/9a/02/8b9a02ac3ea4d3bdb3e1403c34a6c232.jpg", Email = "emily.clark@student.uni" },
+                new Student { Id = 4, FullName = "Michael Johnson", AverageGrade = 3.7M, FieldOfStudyId = 2, StudentImage = @"https://i.pinimg.com/564x/db/c5/e6/dbc5e69ece5632c0885e497d1882d40b.jpg", Email = "michael.johnson@student.uni" },
+                new Student { Id = 5, FullName = "Sophia Williams", AverageGrade = 4.3M, FieldOfStudyId = 3, StudentImage = null, Email = "sophia.williams@student.uni" },
+                new Student { Id = 6, FullName = "Liam Brown", AverageGrade = 4.0M, FieldOfStudyId = 4, StudentImage = null, Email = "liam.brown@student.uni" },
+                new Student { Id = 7, FullName = "Olivia Davis", AverageGrade = 3.8M, FieldOfStudyId = 4, StudentImage = @"https://i.pinimg.com/736x/74/94/71/749471a2654703b02997f7357ef57a37.jpg", Email = "olivia.davis@student.uni" }
             );
         }
 

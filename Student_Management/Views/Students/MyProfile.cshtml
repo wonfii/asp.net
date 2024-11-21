@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "myProfile";
+}
+
+@model data_access.Entities.Student
+
+<div class="home-container">
+    <div class="card" style="width: 18rem;">
+        <img class="profileImg" src="@(Model.StudentImage??"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png")" alt="img" />
+        <div class="card-body">
+            <h5 class="card-title">@Model.FullName</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">@Model.FieldOfStudy.Name</li>
+            <li class="list-group-item">@Model.AverageGrade</li>
+        </ul>
+    </div>
+
+    <div>
+        <h2 class="display-4">Subjects</h2>
+        <h4 >Mandatory</h4>
+        <ul>
+            @foreach (var subject in ViewBag.MandatorySubjects)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <span class="fw-bold"> @subject.Name @subject.Ects ECTS </span>
+                    </div>
+                </div>
+            }
+        </ul>
+
+        <h4>Optional</h4>
+
+        @if (((List<data_access.Entities.Subject>)ViewBag.SelectedSubjects).Any())
+        {
+            <ul>
+                @foreach (var subject in ViewBag.SelectedSubjects)
+                {
+                    <div class="card">
+                        <div class="card-body">
+                            <span class="fw-bold"> @subject.Name @subject.Ects ECTS </span>
+
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                               <a asp-controller="Subjects"
+                                   asp-action="RemoveOptionalSubject"
+                                   asp-route-subjectId="@subject.Id"
+                                   asp-route-returnUrl="@Context.Request.Path"
+                                   class="btn btn-outline-danger">
+
+                                    Delete <i class="bi bi-dash-circle"></i>
+                                </a>                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                }
+            </ul>
+
+        }else{
+            <p>You don't have additional subjects.</p>
+        }
+        
+
+        <a asp-controller="Subjects"
+           asp-action="Index"
+           asp-route-studnetId="@Model.Id"
+           class="btn btn-light">
+
+            Select additional subject <i class="bi bi-journal-text m-lg-auto"></i>
+        </a>
+
+    </div>
+</div>

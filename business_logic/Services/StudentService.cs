@@ -62,6 +62,35 @@ namespace Student_Management.Services {
         {
             return studentRepo.GetByID(id);
         }
+
+        public Student GetStudentByUserId(string userId)
+        {
+            return studentRepo.Get(
+                filter: s => s.UserId == userId,
+                includeProperties: new[] { "FieldOfStudy" }
+            ).FirstOrDefault();
+        }
+        public void UpdateStudentUserId(string email, string userId)
+        {
+            var student = studentRepo.Get(
+                filter: s => s.Email == email
+            ).FirstOrDefault();
+
+            if (student != null)
+            {
+                student.UserId = userId;
+                studentRepo.Update(student);
+                studentRepo.Save();
+            }
+            else
+            {
+                throw new Exception($"Student with email {email} not found.");
+            }
+
+        }
+
+
+
     }
 
 }

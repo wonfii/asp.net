@@ -32,7 +32,14 @@ namespace data_access.Configuration
             builder.HasMany(st => st.Subjects)
                .WithMany(sj => sj.Students)
                .UsingEntity<StudentSubject>();
-        
+
+            // IdentityUser
+
+            builder.HasOne(s => s.User)
+               .WithOne() 
+               .HasForeignKey<Student>(s => s.UserId) 
+               .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 
@@ -58,4 +65,14 @@ namespace data_access.Configuration
             builder.HasKey(fss => new { fss.FieldOfStudyId, fss.SubjectId });
         }
     }
+
+    public class StudentSubjectDbConfigurations : IEntityTypeConfiguration<StudentSubject>
+    {
+        public void Configure(EntityTypeBuilder<StudentSubject> builder)
+        {
+            builder.HasKey(ss => new { ss.StudentId, ss.SubjectId });
+
+        }
+    }
+
 }

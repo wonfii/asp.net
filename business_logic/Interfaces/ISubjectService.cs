@@ -10,12 +10,13 @@ namespace business_logic.Interfaces
     public interface ISubjectService
     {
         List<Subject> GetAllSubjects();
-        List<Subject> GetOptionalSubjects(List<int> ids);
-
         Subject GetSubjectById(int id);
-
         void Create(Subject subject);
         void Edit(Subject subject);
         void Delete(int id);
+        public List<Subject> GetMandatorySubjects(int fieldOfStudyId);
+        public List<Subject> GetOptionalSubjects();
+        List<Subject> GetSelectedSubjectsForStudent(int studentId);
+
     }
 }

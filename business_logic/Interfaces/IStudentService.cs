@@ -15,6 +15,9 @@ namespace business_logic.Interfaces
         void Create(Student student);
         void Edit(Student student);
         void Delete(int id);
-        public FieldOfStudy GetFieldOfStudy(int id);
+        FieldOfStudy GetFieldOfStudy(int id);
+        Student GetStudentByUserId(string userId);
+        void UpdateStudentUserId(string email, string userId);
+
     }
 }
