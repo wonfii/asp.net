@@ -4,16 +4,19 @@
 
 @model data_access.Entities.Student
 
+
 <div class="home-container">
-    <div class="card" style="width: 18rem;">
-        <img class="profileImg" src="@(Model.StudentImage??"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png")" alt="img" />
-        <div class="card-body">
-            <h5 class="card-title">@Model.FullName</h5>
+    <div class="col-md-4">
+        <div class="card" style="width: 18rem;">
+            <img class="profileImg" src="@(Model.StudentImage??"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png")" alt="img" />
+            <div class="card-body">
+                <h5 class="card-title border-light">@Model.FullName</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Field of Study: @Model.FieldOfStudy.Name</li>
+                <li class="list-group-item">Average Grade: @Model.AverageGrade</li>
+            </ul>
         </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">@Model.FieldOfStudy.Name</li>
-            <li class="list-group-item">@Model.AverageGrade</li>
-        </ul>
     </div>
 
     <div>

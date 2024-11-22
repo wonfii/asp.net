@@ -19,14 +19,25 @@ namespace business_logic.Services
         }
         public void AddSubject(int studentId, int subjectId)
         {
-            var studentSubject = new StudentSubject
-            {
-                StudentId = studentId,
-                SubjectId = subjectId
-            };
+            var exists = studentSubjectRepo.Get(
+                filter: ss => ss.StudentId == studentId && ss.SubjectId == subjectId
+            ).Any();
 
-            studentSubjectRepo.Insert(studentSubject);
-            studentSubjectRepo.Save();
+            if (!exists)
+            {
+                var studentSubject = new StudentSubject
+                {
+                    StudentId = studentId,
+                    SubjectId = subjectId
+                };
+
+                studentSubjectRepo.Insert(studentSubject);
+                studentSubjectRepo.Save();
+            }
+            else
+            {
+                Console.WriteLine("The subject is already added for this student.");
+            }
         }
 
         public void RemoveSubject(int studentId, int subjectId)

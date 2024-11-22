@@ -8,7 +8,7 @@
     <h1 class="display-4">@Model.Name - Student list</h1>
 </div>
 
-<h3 m-3>Students in this group:</h3>
+<h3 m-3>Student's List:</h3>
 
 @if (Model.Students.Any())
 {
@@ -19,6 +19,7 @@
                     <th scope="col">Id</th>
                     <th scope="col"></th>
                     <th scope="col">Full Name</th>
+                    <th scope="col">Email</th>
                     <th scope="col">Average Grade</th>
                     <th scope="col">Delete</th>
                     <th scope="col">Edit</th>
@@ -31,6 +32,7 @@
                         <td scope="row">@student.Id</td>
                         <td><img class="studentImg" src="@(student.StudentImage??"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png")" alt="img" /></td>
                         <td colspan="1">@student.FullName</td>
+                        <td>@student.Email</td>
                         <td>@student.AverageGrade</td>
                         <td>
                             <form asp-action="DeleteStudent" asp-route-id="@student.Id" method="post">

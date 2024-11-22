@@ -26,11 +26,13 @@ namespace Student_Management.Controllers
             this.subjectService = subjectService;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View(studentService.GetGroupsWithStudents());
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult GroupDetails(int id, string returnUrl = null)
         {
             var group = studentService.GetGroupDetails(id);
@@ -39,6 +41,7 @@ namespace Student_Management.Controllers
             return View(group);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult AddNewStudent()
         {
             LoadGroups();
@@ -58,6 +61,7 @@ namespace Student_Management.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult DeleteStudent(int id)
         {
@@ -65,6 +69,7 @@ namespace Student_Management.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult EditStudent(int id)
         {
             LoadGroups();
@@ -72,7 +77,7 @@ namespace Student_Management.Controllers
             if (student == null) return NotFound();
             return View(student);
         }
-
+       
         [HttpPost]
         public IActionResult EditStudent(Student student)
         {
@@ -85,7 +90,6 @@ namespace Student_Management.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [Authorize]
         [HttpGet]
         public IActionResult MyProfile()
         {
@@ -113,7 +117,7 @@ namespace Student_Management.Controllers
 
         private void LoadGroups()
         {
-            ViewBag.GroupList = new SelectList(studentService.GetGroupsWithStudents(), nameof(FieldOfStudy.Id), nameof(FieldOfStudy.Name));
+            ViewBag.FieldOfStudyList = new SelectList(studentService.GetGroupsWithStudents(), nameof(FieldOfStudy.Id), nameof(FieldOfStudy.Name));
         }
     }
 

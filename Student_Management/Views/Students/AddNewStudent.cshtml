@@ -18,6 +18,15 @@
                 <span class="form-text text-danger" asp-validation-for="FullName"></span>
             </div>
         </div>
+
+        <div class="row mb-3">
+            <label asp-for="Email" class="col-sm-2 col-form-label">Email: </label>
+            <div class="col-sm-10">
+                <input asp-for="Email" type="text" class="form-control smaller-input" placeholder="Email">
+                <span class="form-text text-danger" asp-validation-for="Email"></span>
+            </div>
+        </div>
+
         <div class="row mb-3">
             <label asp-for="AverageGrade" class="col-sm-2 col-form-label">Average Grade: </label>
             <div class="col-sm-10">
@@ -34,9 +43,10 @@
             </div>
         </div>
 
+
         <div class="col-md-4">
             <label asp-for="FieldOfStudyId" class="form-label">Field Of Study</label>
-            <select asp-for="FieldOfStudyId" asp-items="@ViewBag.GroupList" class="form-select">
+            <select asp-for="FieldOfStudyId" asp-items="@ViewBag.FieldOfStudyList" class="form-select">
                 <option selected>Choose...</option>
             </select>
             <span class="form-text text-danger" asp-validation-for="FieldOfStudyId"></span>

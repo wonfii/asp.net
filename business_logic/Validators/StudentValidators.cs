@@ -19,6 +19,14 @@ namespace Student_Management.Validators
 
             RuleFor(x => x.StudentImage).Must(LinkMustBeAUri)
                .WithMessage("{PropertyName} has incorrect URL format");
+
+            RuleFor(x => x.Email)
+               .NotEmpty()
+               .NotNull()
+               .EmailAddress()
+               .WithMessage("Invalid email format.")
+               .Must(email => email.EndsWith("@student.uni"))
+               .WithMessage("Email must end with @student.uni");
         }
 
         private static bool LinkMustBeAUri(string? link)
