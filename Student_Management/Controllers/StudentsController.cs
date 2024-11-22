@@ -90,6 +90,7 @@ namespace Student_Management.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult MyProfile()
         {
