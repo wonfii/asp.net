@@ -100,11 +100,27 @@ body {
     gap: 15px;
 }
 
-.card {
+.col-md-4 card {
     margin: 15px;
 }
+
+.profileImg {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
 
 .field-box a {
     text-decoration: none;
     color: inherit;
+}
+
+.card {
+    margin-bottom: 1rem;
+}
+
+h2, h4 {
+    margin-top: 1rem; 
 }

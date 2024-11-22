@@ -22,8 +22,10 @@ namespace Student_Management
             string connectionString = builder.Configuration.GetConnectionString("LocalDb")!;
             builder.Services.AddDbContext<StudentDbContext>(opt => opt.UseSqlServer(connectionString));
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<StudentDbContext>();
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+               .AddDefaultTokenProviders()
+               .AddDefaultUI()
+               .AddEntityFrameworkStores<StudentDbContext>();
 
 
             //Add Fluent Validation
@@ -45,6 +47,7 @@ namespace Student_Management
             });
             builder.Services.AddHttpContextAccessor();
 
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -55,7 +58,11 @@ namespace Student_Management
                 app.UseHsts();
             }
 
-           
+            using (var scope = app.Services.CreateScope())
+            {
+                RoleSeeder.SeedRoles(scope.ServiceProvider).Wait();
+                RoleSeeder.SeedAdmin(scope.ServiceProvider).Wait();
+            }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Student_Management.Services;
 using business_logic.Interfaces;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace Student_Management.Areas.Identity.Pages.Account
 {
@@ -126,10 +127,19 @@ namespace Student_Management.Areas.Identity.Pages.Account
                     _logger.LogInformation("User logged in.");
                     //return LocalRedirect(returnUrl);
 
+                    if (Input.Email == "myadmin@myadmin.com")
+                    {
+                        _logger.LogInformation("Admin logged");
+                        return LocalRedirect(returnUrl);  
+                    }
+
                     try
                     {
+                        
                         var userId = await userManager.GetUserIdAsync(await userManager.FindByEmailAsync(Input.Email));
                         var student = studentService.GetStudentByUserId(userId); 
+
+
 
                         if (student != null)
                         {

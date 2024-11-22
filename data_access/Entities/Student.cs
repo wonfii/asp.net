@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace data_access.Entities
 {
@@ -13,7 +12,7 @@ namespace data_access.Entities
 
         public string? StudentImage { get; set; }
 
-        public FieldOfStudy FieldOfStudy { get; set; }
+        public FieldOfStudy? FieldOfStudy { get; set; }
 
         public int FieldOfStudyId {  get; set; }
 
@@ -22,6 +21,6 @@ namespace data_access.Entities
         public ICollection<Subject>? Subjects { get; set; }
 
         public string? UserId { get; set; }
-        public IdentityUser User { get; set; }
+        public IdentityUser? User { get; set; }
     }
 }
